@@ -44,6 +44,10 @@
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Escape from Duckov\Duckov_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
 
+<Reference Include="UnityEngine.AudioModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Escape from Duckov\Duckov_Data\Managed\FMODUnity.dll</HintPath>
+    </Reference>
+	
     <!-- Duckov 핵심 -->
     <Reference Include="TeamSoda.Duckov.Core">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Escape from Duckov\Duckov_Data\Managed\TeamSoda.Duckov.Core.dll</HintPath>

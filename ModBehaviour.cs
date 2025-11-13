@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 
 using Duckov.Modding;
+using Duckov; // AudioManager 사용을 위해 추가
 
 namespace mikumikubeam
 {
@@ -62,6 +63,10 @@ namespace mikumikubeam
             if (Input.GetKeyDown(FireKey))
             {
                 FireBeam();
+
+                // 🔊 빔 시작 시 한 번만 사운드 재생
+                PlayBeamStartSound();
+
                 PlayInternalVideo();
             }
 
@@ -70,7 +75,7 @@ namespace mikumikubeam
         }
 
         // ============================
-        // 빔 (사운드 없음, 라인만)
+        // 빔 (라인 렌더러)
         // ============================
         private void FireBeam()
         {
@@ -85,6 +90,34 @@ namespace mikumikubeam
 
             _lr.enabled = true;
             _beamEnd = Time.time + BeamDuration;
+        }
+
+        // ============================
+        // 빔 시작 사운드 재생
+        // ============================
+        private void PlayBeamStartSound()
+        {
+            try
+            {
+                // 모드 DLL 경로 기준으로 Audio/BeamStart.mp3 찾기
+                string dllPath = Assembly.GetExecutingAssembly().Location;
+                string folder = Path.GetDirectoryName(dllPath);
+                string audioDir = Path.Combine(folder, "Audio");
+                string filePath = Path.Combine(audioDir, "BeamStart.mp3");
+
+                if (!File.Exists(filePath))
+                {
+                    Debug.Log("[mikumikubeam] BeamStart.mp3 not found: " + filePath);
+                    return;
+                }
+
+                // Duckov 전용 커스텀 사운드 재생
+                AudioManager.PostCustomSFX(filePath, null, false);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("[mikumikubeam] PlayBeamStartSound ERROR: " + ex.Message);
+            }
         }
 
         // ============================
